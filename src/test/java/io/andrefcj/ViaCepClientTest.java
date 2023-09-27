@@ -20,9 +20,9 @@ public class ViaCepClientTest {
         var cep = "89202295";
         var response = viaCepClient.find(cep);
 
-        assertEquals("4209102", response.getIbge());
-        assertEquals("89202-295", response.getCep());
-        assertEquals("Joinville", response.getLocalidade());
-        assertEquals("Avenida Getúlio Vargas", response.getLogradouro());
+        assertEquals("4209102", response.ibge());
+        assertEquals("89202-295", response.cep());
+        assertEquals("Joinville", response.localidade());
+        assertEquals("Avenida Getúlio Vargas", response.logradouro());
     }
 }
