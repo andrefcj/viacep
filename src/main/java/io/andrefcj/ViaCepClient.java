@@ -12,8 +12,8 @@ import java.net.http.HttpResponse;
 public class ViaCepClient {
     public CepDto find(String cep) {
         try {
-            // TODO: validate cep
-            final String url = "https://viacep.com.br/ws/" + cep + "/json/";
+            final String rawCep = setRawCep(cep);
+            final String url = "https://viacep.com.br/ws/" + rawCep + "/json/";
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -27,5 +27,19 @@ public class ViaCepClient {
         } catch (Exception e) {
             throw new CepException(e.getMessage());
         }
+    }
+
+    private String setRawCep(String cep) {
+        if (!isValid(cep)) {
+            throw new CepException("Invalid CEP.");
+        }
+        return cep.replaceAll("-?\\D", "");
+    }
+
+    private Boolean isValid(String cep) {
+        if (cep == null || cep.isEmpty()) {
+            return false;
+        }
+        return cep.matches("\\d{5}[-.\\s]?\\d{3}");
     }
 }
